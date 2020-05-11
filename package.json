@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "storybook": "start-storybook -p 7007"
   },
   "dependencies": {
     "expo": "~37.0.3",
@@ -17,10 +18,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/react-native": "^5.3.18",
+    "@storybook/react-native-server": "^5.3.18",
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.61.17",
+    "babel-loader": "^8.1.0",
     "babel-preset-expo": "~8.1.0",
-    "typescript": "~3.8.3"
+    "typescript": "^3.8.0"
   },
   "private": true
 }
