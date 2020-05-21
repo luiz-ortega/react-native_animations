@@ -32,7 +32,7 @@ const ClockValuesAndIdentity = () => {
   const clock = new Clock();
   const startAnimation = new Value(0);
   const startTime = new Value(0);
-  const duration = 3000;
+  const duration = 500;
   const endTime = add(startTime, duration);
   const from = new Value(0);
   const to = new Value(1);
@@ -46,9 +46,9 @@ const ClockValuesAndIdentity = () => {
     () => [
       cond(eq(startAnimation, 1), [
         startClock(clock),
-        set(startTime, clock),
-        set(from, not(from)),
+        set(from, opacity),
         set(to, not(to)),
+        set(startTime, clock),
         set(startAnimation, 0),
       ]),
     ],
