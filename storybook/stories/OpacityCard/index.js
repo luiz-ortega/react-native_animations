@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
-  Clock,
   Extrapolate,
-  Value,
   add,
   cond,
   eq,
@@ -13,6 +11,7 @@ import Animated, {
   startClock,
   useCode,
 } from "react-native-reanimated";
+import { useClock, useValues } from "react-native-redash";
 
 import Spaceman from "../../../components/Spaceman";
 import Button from "../../../components/Button";
@@ -28,31 +27,32 @@ const styles = StyleSheet.create({
   },
 });
 
+const duration = 500;
+
 const ClockValuesAndIdentity = () => {
-  const clock = new Clock();
-  const startAnimation = new Value(0);
-  const startTime = new Value(0);
-  const duration = 500;
+  const [show, setShow] = useState(true);
+  const clock = useClock();
+  const [startTime, from, to, startAnimation] = useValues([0, 0, 0, 0]);
+
   const endTime = add(startTime, duration);
-  const from = new Value(0);
-  const to = new Value(1);
   const opacity = interpolate(clock, {
     inputRange: [startTime, endTime],
     outputRange: [from, to],
     extrapolate: Extrapolate.CLAMP,
   });
 
+  useCode(() => set(startAnimation, 1), [show]);
   useCode(
     () => [
+      startClock(clock),
       cond(eq(startAnimation, 1), [
-        startClock(clock),
         set(from, opacity),
         set(to, not(to)),
         set(startTime, clock),
         set(startAnimation, 0),
       ]),
     ],
-    []
+    [clock, from, opacity, startAnimation, startTime, to]
   );
   return (
     <View style={styles.container}>
@@ -61,7 +61,10 @@ const ClockValuesAndIdentity = () => {
           <Spaceman />
         </Animated.View>
       </View>
-      <Button label="Toggle" onPress={() => startAnimation.setValue(1)} />
+      <Button
+        label={show ? "Hide" : "Show"}
+        onPress={() => setShow((prev) => !prev)}
+      />
     </View>
   );
 };
