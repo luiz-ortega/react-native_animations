@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
   Extrapolate,
+  Value,
   add,
   cond,
   eq,
@@ -31,9 +32,9 @@ const duration = 500;
 
 const ClockValuesAndIdentity = () => {
   const [show, setShow] = useState(true);
-  const clock = useClock();
-  const [startTime, from, to, startAnimation] = useValues([0, 0, 0, 0]);
-
+  const clock = useClock([]);
+  const [startTime, from, to] = useValues([0, 0, 1], []);
+  const startAnimation = new Value(1);
   const endTime = add(startTime, duration);
   const opacity = interpolate(clock, {
     inputRange: [startTime, endTime],
