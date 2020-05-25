@@ -26,7 +26,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-reanimated": "1.7.0",
-    "react-native-redash": "14.0.3",
+    "react-native-redash": "12.5.3",
     "react-native-screens": "~2.2.0",
     "react-native-web": "~0.11.7",
     "use-memo-one": "^1.1.1"

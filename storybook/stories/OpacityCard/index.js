@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
   Extrapolate,
-  Value,
   add,
   cond,
   eq,
   interpolate,
   not,
+  proc,
   set,
   startClock,
   useCode,
@@ -30,11 +30,28 @@ const styles = StyleSheet.create({
 
 const duration = 500;
 
+const runAnimation = proc(
+  (
+    startAnimation: Animated.Value<number>,
+    clock: Animated.Clock,
+    from: Animated.Value<number>,
+    to: Animated.Value<number>,
+    startTime: Animated.Value<number>,
+    opacity: Animated.Node<number>
+  ) =>
+    cond(eq(startAnimation, 1), [
+      startClock(clock),
+      set(from, opacity),
+      set(to, not(to)),
+      set(startTime, clock),
+      set(startAnimation, 0),
+    ])
+);
+
 const ClockValuesAndIdentity = () => {
   const [show, setShow] = useState(true);
   const clock = useClock([]);
-  const [startTime, from, to] = useValues([0, 0, 1], []);
-  const startAnimation = new Value(1);
+  const [startTime, from, to, startAnimation] = useValues([0, 0, 0, 0], []);
   const endTime = add(startTime, duration);
   const opacity = interpolate(clock, {
     inputRange: [startTime, endTime],
@@ -44,15 +61,7 @@ const ClockValuesAndIdentity = () => {
 
   useCode(() => set(startAnimation, 1), [show]);
   useCode(
-    () => [
-      startClock(clock),
-      cond(eq(startAnimation, 1), [
-        set(from, opacity),
-        set(to, not(to)),
-        set(startTime, clock),
-        set(startAnimation, 0),
-      ]),
-    ],
+    () => runAnimation(startAnimation, clock, from, to, startTime, opacity),
     [clock, from, opacity, startAnimation, startTime, to]
   );
   return (

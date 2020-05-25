@@ -8876,14 +8876,15 @@ react-native-reanimated@1.7.0:
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.7.0.tgz#896db2576552ac59d288a1f6c7f00afc171f240c"
   integrity sha512-FQWSqP605eQVJumuK2HpR+7heF0ZI+qfy4jNguv3Xv8nPFHeIgZaRTXHCEQL2AcuSIj50zy8jGJf5l134QMQWQ==
 
-react-native-redash@14.0.3:
-  version "14.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-14.0.3.tgz#7f62644f110ceb61962a5aa181e2c8ae05e04c9d"
-  integrity sha512-ExSP77re4QEGEtjVenfwMTo4RGI1togE6NGsblbqVGtRMTD0IDGovpeC6YQt37jHdaYLRM4VYjVNqjgDjcCt5Q==
+react-native-redash@12.5.3:
+  version "12.5.3"
+  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-12.5.3.tgz#682acf37e3c26032a9a28f91bf58facff0833119"
+  integrity sha512-KK5ZMdMWiIq+HP2PUp1l7fsjIgF2U6taD6pgnqdjT/RkbLvvgXQ7h5ssI9XvbudeXq4GDW8WVyF1VKtbbmGpTQ==
   dependencies:
     abs-svg-path "^0.1.1"
     normalize-svg-path "^1.0.1"
     parse-svg-path "^0.1.2"
+    use-memo-one "^1.1.1"
 
 react-native-screens@~2.2.0:
   version "2.2.0"
