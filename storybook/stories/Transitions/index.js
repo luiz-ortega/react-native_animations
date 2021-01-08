@@ -18,18 +18,33 @@ const Transitions = () => {
       height,
       width,
     },
+    elementsContainer: {
+      display: "flex",
+      justifyContent: "space-around",
+      alignItems: "center",
+      /*       borderWidth: 1,
+      borderColor: "#060", */
+      width,
+      height: height - 200,
+      position: "absolute",
+      bottom: 250,
+      top: 20,
+    },
     buttonsContainer: {
       position: "absolute",
-      width,
       bottom: 0,
+      width,
     },
   });
 
   return (
     <View style={styles.container}>
-      {elements.map((element) => (
-        <Spaceman small key={element} />
-      ))}
+      <View style={styles.elementsContainer}>
+        {elements.map((element) => (
+          <Spaceman small key={element} />
+        ))}
+      </View>
+
       <View style={styles.buttonsContainer}>
         <Button label="Column" onPress={() => {}} />
         <Button label="Row" onPress={() => {}} />
