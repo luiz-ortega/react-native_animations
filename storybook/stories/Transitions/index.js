@@ -18,18 +18,6 @@ const Transitions = () => {
       height,
       width,
     },
-    elementsContainer: {
-      display: "flex",
-      justifyContent: "space-around",
-      alignItems: "center",
-      /*       borderWidth: 1,
-      borderColor: "#060", */
-      width,
-      height: height - 200,
-      position: "absolute",
-      bottom: 250,
-      top: 20,
-    },
     buttonsContainer: {
       position: "absolute",
       bottom: 0,
@@ -37,11 +25,77 @@ const Transitions = () => {
     },
   });
 
+  const row = {
+    id: "row",
+    name: "Row",
+    layout: {
+      container: {
+        display: "flex",
+        justifyContent: "space-around",
+        alignItems: "center",
+        width,
+        height: height - 200,
+        position: "absolute",
+        bottom: 250,
+        top: 20,
+        flexDirection: "row",
+      },
+    },
+  };
+
+  const column = {
+    id: "column",
+    name: "Column",
+    layout: {
+      container: {
+        display: "flex",
+        justifyContent: "space-around",
+        alignItems: "center",
+        width,
+        height: height - 200,
+        position: "absolute",
+        bottom: 250,
+        top: 20,
+      },
+    },
+  };
+
+  const wrap = {
+    id: "wrap",
+    name: "Wrap",
+    layout: {
+      container: {
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        height: height - 200,
+        width,
+        position: "absolute",
+        bottom: 250,
+        top: 20,
+
+        flexDirection: "row",
+        flexWrap: "wrap",
+      },
+
+      child: {
+        width: width / 2,
+        height: width / 2,
+
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+    },
+  };
+
+  const currentLayout = wrap.layout;
+
   return (
     <View style={styles.container}>
-      <View style={styles.elementsContainer}>
+      <View style={currentLayout.container}>
         {elements.map((element) => (
-          <Spaceman small key={element} />
+          <Spaceman small style={currentLayout.child} key={element} />
         ))}
       </View>
 
