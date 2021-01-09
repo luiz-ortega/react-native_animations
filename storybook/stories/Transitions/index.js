@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { Transition, Transitioning } from "react-native-reanimated";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 
 import Spaceman from "../../../components/Spaceman";
@@ -7,6 +8,7 @@ import Button from "../../../components/Button";
 const elements = [1, 2, 3];
 
 const Transitions = () => {
+  const ref = useRef(null);
   const { height, width } = useWindowDimensions();
 
   const styles = StyleSheet.create({
@@ -89,25 +91,34 @@ const Transitions = () => {
     },
   };
 
-  /* const currentLayout = wrap.layout; */
+  const transition = (
+    <Transition.Change durationMs={400} interpolation="easeInOut" />
+  );
 
   const [currentLayout, setCurrentLayout] = useState(row.layout);
 
+  const animateLayout = (layout) => {
+    if (ref.current) {
+      ref.current.animateNextTransition();
+    }
+    setCurrentLayout(layout);
+  };
+
   return (
     <View style={styles.container}>
-      <View style={currentLayout.container}>
+      <Transitioning.View
+        style={currentLayout.container}
+        {...{ ref, transition }}
+      >
         {elements.map((element) => (
           <Spaceman small style={currentLayout.child} key={element} />
         ))}
-      </View>
+      </Transitioning.View>
 
       <View style={styles.buttonsContainer}>
-        <Button
-          label="Column"
-          onPress={() => setCurrentLayout(column.layout)}
-        />
-        <Button label="Row" onPress={() => setCurrentLayout(row.layout)} />
-        <Button label="Wrap" onPress={() => setCurrentLayout(wrap.layout)} />
+        <Button label="Column" onPress={() => animateLayout(column.layout)} />
+        <Button label="Row" onPress={() => animateLayout(row.layout)} />
+        <Button label="Wrap" onPress={() => animateLayout(wrap.layout)} />
       </View>
     </View>
   );
