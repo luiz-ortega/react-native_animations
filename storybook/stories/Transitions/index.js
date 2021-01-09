@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 
 import Spaceman from "../../../components/Spaceman";
@@ -89,7 +89,9 @@ const Transitions = () => {
     },
   };
 
-  const currentLayout = wrap.layout;
+  /* const currentLayout = wrap.layout; */
+
+  const [currentLayout, setCurrentLayout] = useState(row.layout);
 
   return (
     <View style={styles.container}>
@@ -100,9 +102,12 @@ const Transitions = () => {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <Button label="Column" onPress={() => {}} />
-        <Button label="Row" onPress={() => {}} />
-        <Button label="Wrap" onPress={() => {}} />
+        <Button
+          label="Column"
+          onPress={() => setCurrentLayout(column.layout)}
+        />
+        <Button label="Row" onPress={() => setCurrentLayout(row.layout)} />
+        <Button label="Wrap" onPress={() => setCurrentLayout(wrap.layout)} />
       </View>
     </View>
   );
