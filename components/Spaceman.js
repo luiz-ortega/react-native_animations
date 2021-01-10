@@ -6,6 +6,7 @@ import spaceman from "../assets/images/spaceman.jpg";
 const Spaceman = ({ small, medium, style = {} }) => {
   const defaultStyle = {
     ...(small && { height: 90, width: 90 }),
+    ...(medium && { height: 150, width: 150 }),
     borderRadius: 120,
   };
 
