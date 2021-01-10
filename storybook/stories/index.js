@@ -8,10 +8,7 @@ import CenterView from "./CenterView";
 import OpacityCard from "./OpacityCard";
 import Transitions from "./Transitions";
 
-storiesOf("Transition", module)
+storiesOf("Animation", module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .add("opacity", () => <OpacityCard />);
-
-storiesOf("Transition", module)
-  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .add("transitions", () => <Transitions />);
+  .add("Opacity", () => <OpacityCard />)
+  .add("Transitions", () => <Transitions />);
