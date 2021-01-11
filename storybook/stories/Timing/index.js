@@ -73,6 +73,7 @@ const Timing = () => {
       width,
     },
   });
+
   const [play, setPlay] = useState(false);
   const clock = useClock();
   const progress = useValue(0);
@@ -86,6 +87,7 @@ const Timing = () => {
     ],
     []
   );
+
   return (
     <View style={styles.container}>
       <View style={styles.elemetsContainer}>
