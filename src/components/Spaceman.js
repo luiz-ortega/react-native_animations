@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, View } from "react-native";
 
-import spaceman from "../assets/images/spaceman.jpg";
+import spaceman from "../assets/spaceman.jpg";
 
 const Spaceman = ({ small, medium, style = {} }) => {
   const defaultStyle = {

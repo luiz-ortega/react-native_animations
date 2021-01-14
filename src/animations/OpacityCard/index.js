@@ -13,10 +13,10 @@ import Animated, {
   useCode,
   block,
 } from "react-native-reanimated";
-import { useClock, useValues } from "react-native-redash";
+import { useClock, useValues } from "react-native-redash/lib/module/v1";
 
-import Spaceman from "../../../components/Spaceman";
-import Button from "../../../components/Button";
+import Spaceman from "../../components/Spaceman";
+import Button from "../../components/Button";
 
 const styles = StyleSheet.create({
   container: {

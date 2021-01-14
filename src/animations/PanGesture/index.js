@@ -1,5 +1,5 @@
 import React from "react";
-import { View, useWindowDimensions } from "react-native";
+import { View, useWindowDimensions, Dimensions } from "react-native";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import Animated, {
   Value,
@@ -13,9 +13,11 @@ import Animated, {
   min,
   max,
 } from "react-native-reanimated";
-import { onGestureEvent } from "react-native-redash";
+import { onGestureEvent } from "react-native-redash/lib/module/v1";
 
-import Spaceman from "../../../components/Spaceman";
+import Spaceman from "../../components/Spaceman";
+
+/* const { width, height } = Dimensions.get("window"); */
 
 const diff = (v) => {
   const stash = new Animated.Value(0);
@@ -53,27 +55,23 @@ const PanGesture = () => {
   const translationX = new Value(0);
   const translationY = new Value(0);
   const gestureHandler = onGestureEvent({
-    state,
     translationX,
     translationY,
+    state,
   });
 
-  const translateX = diffClamp(withOffset(translationX, state), 0, width - 100);
-  const translateY = diffClamp(
-    withOffset(translationY, state),
-    0,
-    height - 200
-  );
+  const translateX = diffClamp(withOffset(translationX, state), 0, width - 90);
+  const translateY = diffClamp(withOffset(translationY, state), 0, height - 90);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View>
       <PanGestureHandler {...gestureHandler}>
         <Animated.View
           style={{
             transform: [{ translateX }, { translateY }],
           }}
         >
-          <Spaceman />
+          <Spaceman small />
         </Animated.View>
       </PanGestureHandler>
     </View>

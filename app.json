@@ -1,12 +1,7 @@
 {
   "expo": {
-    "name": "react-native_animations",
-    "slug": "react-native_animations",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "name": "react-native_animations2",
+    "slug": "react-native_animations2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,6 +18,15 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
     }
   }
 }
