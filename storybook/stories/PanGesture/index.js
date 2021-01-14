@@ -1,21 +1,50 @@
 import React from "react";
-import { StyleSheet, View, useWindowDimensions } from "react-native";
+import { View, useWindowDimensions } from "react-native";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
-import Animated, { Value, cond, set, eq, add } from "react-native-reanimated";
-import { diffClamp, onGestureEvent } from "react-native-redash";
+import Animated, {
+  Value,
+  cond,
+  set,
+  eq,
+  add,
+  block,
+  defined,
+  sub,
+  min,
+  max,
+} from "react-native-reanimated";
+import { onGestureEvent } from "react-native-redash";
 
 import Spaceman from "../../../components/Spaceman";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  /* spaceman: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  }, */
-});
+const diff = (v) => {
+  const stash = new Animated.Value(0);
+  const prev = new Animated.Value();
+  return block([
+    set(stash, cond(defined(prev), sub(v, prev), 0)),
+    set(prev, v),
+    stash,
+  ]);
+};
+
+const diffClamp = (
+  a,
+  minVal: Animated.Adaptable,
+  maxVal: Animated.Adaptable
+) => {
+  const value = new Animated.Value();
+  return set(
+    value,
+    min(max(add(cond(defined(value), value, a), diff(a)), minVal), maxVal)
+  );
+};
+
+const withOffset = (value, state, offset = new Value(0)) =>
+  cond(
+    eq(state, State.END),
+    [set(offset, add(offset, value)), offset],
+    add(offset, value)
+  );
 
 const PanGesture = () => {
   const { height, width } = useWindowDimensions();
@@ -29,20 +58,22 @@ const PanGesture = () => {
     translationY,
   });
 
-  const translateX = translationX;
-  const translateY = translationY;
+  const translateX = diffClamp(withOffset(translationX, state), 0, width - 100);
+  const translateY = diffClamp(
+    withOffset(translationY, state),
+    0,
+    height - 200
+  );
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1 }}>
       <PanGestureHandler {...gestureHandler}>
         <Animated.View
           style={{
             transform: [{ translateX }, { translateY }],
           }}
         >
-          {/* <View style={styles.spaceman}> */}
           <Spaceman />
-          {/* </View> */}
         </Animated.View>
       </PanGestureHandler>
     </View>

@@ -11,6 +11,7 @@ import Animated, {
   set,
   startClock,
   useCode,
+  block,
 } from "react-native-reanimated";
 import { useClock, useValues } from "react-native-redash";
 
@@ -32,26 +33,28 @@ const duration = 500;
 
 const runAnimation = proc(
   (
-    startAnimation: Animated.Value<number>,
     clock: Animated.Clock,
     from: Animated.Value<number>,
     to: Animated.Value<number>,
     startTime: Animated.Value<number>,
+    startAnimation: Animated.Value<number>,
     opacity: Animated.Node<number>
   ) =>
-    cond(eq(startAnimation, 1), [
+    block([
       startClock(clock),
-      set(from, opacity),
-      set(to, not(to)),
-      set(startTime, clock),
-      set(startAnimation, 0),
+      cond(eq(startAnimation, 1), [
+        set(from, opacity),
+        set(to, not(to)),
+        set(startTime, clock),
+        set(startAnimation, 0),
+      ]),
     ])
 );
 
 const ClockValuesAndIdentity = () => {
   const [show, setShow] = useState(true);
-  const clock = useClock([]);
-  const [startTime, from, to, startAnimation] = useValues([0, 0, 0, 0], []);
+  const clock = useClock();
+  const [startTime, from, to, startAnimation] = useValues(0, 0, 0, 0);
   const endTime = add(startTime, duration);
   const opacity = interpolate(clock, {
     inputRange: [startTime, endTime],
@@ -61,7 +64,7 @@ const ClockValuesAndIdentity = () => {
 
   useCode(() => set(startAnimation, 1), [show]);
   useCode(
-    () => runAnimation(startAnimation, clock, from, to, startTime, opacity),
+    () => runAnimation(clock, from, to, startTime, startAnimation, opacity),
     [clock, from, opacity, startAnimation, startTime, to]
   );
   return (
